@@ -1,6 +1,5 @@
 import tensorflow as tf
 
-# Step 1: Load and preprocess the training, validation, and test data
 train_dir = './dataset/training'
 validation_dir = './dataset/validation'
 test_dir = './dataset/test'
@@ -43,7 +42,6 @@ test_data = test_datagen.flow_from_directory(
     class_mode='binary'
 )
 
-# Step 2: Create the CNN model
 model = tf.keras.Sequential([
     tf.keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(512, 512, 3)),
     tf.keras.layers.MaxPooling2D(2, 2),
@@ -59,17 +57,14 @@ model = tf.keras.Sequential([
     tf.keras.layers.Dense(2, activation='softmax')
 ])
 
-# Step 3: Compile the model
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-# Step 4: Train the model with validation
 model.fit(
     train_data,
     epochs=20,
     validation_data=validation_data
 )
 
-# Step 5: Evaluate the model on the test data
 loss, accuracy = model.evaluate(test_data)
 print('Test accuracy:', accuracy)
 
