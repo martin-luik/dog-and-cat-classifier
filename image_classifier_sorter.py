@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 from tensorflow import keras
 
-model = keras.models.load_model('./models/dog_and_cat_classifier_model_v17.h5')
+model = keras.models.load_model('./models/dog_and_cat_classifier_model_v1.h5')
 
 input_data_dir = './input-images'
 sorted_data_dir = './sorted-images'
