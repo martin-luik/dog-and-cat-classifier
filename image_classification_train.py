@@ -5,6 +5,7 @@ validation_dir = './dataset/validation'
 test_dir = './dataset/test'
 
 TARGET_IMG_SIZE = (512, 512)
+BATCH_SIZE = 32
 
 train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(
     rescale=1./255,
@@ -20,7 +21,7 @@ train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(
 train_data = train_datagen.flow_from_directory(
     train_dir,
     target_size=TARGET_IMG_SIZE,
-    batch_size=32,
+    batch_size=BATCH_SIZE,
     class_mode='binary'
 )
 
@@ -29,7 +30,7 @@ valid_datagen = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
 validation_data = valid_datagen.flow_from_directory(
     validation_dir,
     target_size=TARGET_IMG_SIZE,
-    batch_size=32,
+    batch_size=BATCH_SIZE,
     class_mode='binary'
 )
 
@@ -38,7 +39,7 @@ test_datagen = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
 test_data = test_datagen.flow_from_directory(
     test_dir,
     target_size=TARGET_IMG_SIZE,
-    batch_size=32,
+    batch_size=BATCH_SIZE,
     class_mode='binary'
 )
 
@@ -49,10 +50,7 @@ model = tf.keras.Sequential([
     tf.keras.layers.MaxPooling2D(2, 2),
     tf.keras.layers.Conv2D(128, (3, 3), activation='relu'),
     tf.keras.layers.MaxPooling2D(2, 2),
-    tf.keras.layers.Conv2D(256, (3, 3), activation='relu'),
-    tf.keras.layers.MaxPooling2D(2, 2),
     tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(512, activation='relu'),
     tf.keras.layers.Dense(256, activation='relu'),
     tf.keras.layers.Dense(2, activation='softmax')
 ])
@@ -67,5 +65,6 @@ model.fit(
 
 loss, accuracy = model.evaluate(test_data)
 print('Test accuracy:', accuracy)
+print('Test loss:', loss)
 
 model.save('./models/dog_and_cat_classifier_model_v1.h5')
