@@ -15,7 +15,7 @@ for filename in os.listdir(input_data_dir):
     image = Image.open(image_path)
     image = image.resize((512, 512))
     image = np.expand_dims(image, axis=0)
-    image = image / 255.0  # Normalize pixel values to [0,1]
+    image = image / 255.0
 
     predictions = model.predict(image)
     predicted_class_index = np.argmax(predictions[0])
